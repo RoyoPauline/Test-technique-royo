@@ -1,9 +1,9 @@
+/* Import des styles des composants */
+@import './styles/components.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-/* Import des styles des composants */
-@import './styles/components.css';
 
 @layer base {
     html {

@@ -14,17 +14,38 @@
     </header>
 
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <PatientList
-        v-if="currentView === 'list'"
-        :patients="patients"
-        @view-patient="handleViewPatient"
-      />
-      <PatientCard
-        v-if="currentView === 'detail' && selectedPatient"
-        :patient="selectedPatient"
-        @go-back="handleGoBack"
-        @refresh="handleRefresh"
-      />
+      <div v-if="currentView === 'list'" class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+        <div class="lg:col-span-3">
+          <PatientList
+            :patients="patients"
+            @view-patient="handleViewPatient"
+          />
+        </div>
+        <div class="lg:col-span-1">
+          <AlertsPanel
+            :patients="patients"
+            @view-patient="handleViewPatientFromAlert"
+            @alert-click="handleAlertClick"
+          />
+        </div>
+      </div>
+      
+      <div v-if="currentView === 'detail' && selectedPatient" class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+        <div class="lg:col-span-3">
+          <PatientCard
+            :patient="selectedPatient"
+            @go-back="handleGoBack"
+            @refresh="handleRefresh"
+          />
+        </div>
+        <div class="lg:col-span-1">
+          <AlertsPanel
+            :patients="patients"
+            @view-patient="handleViewPatientFromAlert"
+            @alert-click="handleAlertClick"
+          />
+        </div>
+      </div>
     </main>
   </div>
 </template>
@@ -33,15 +54,15 @@
 import { onMounted, ref } from 'vue'
 import PatientList from '@/components/PatientList.vue'
 import PatientCard from '@/components/PatientCard.vue'
+import AlertsPanel from '@/components/AlertsPanel.vue'
 import { PatientService } from '@/services/patientService'
-import type { Patient } from '@/types/patient'
+import type { Patient, Alert } from '@/types/patient'
 
   const patientService = PatientService.getInstance()
 
 const currentView = ref<'list' | 'detail'>('list')
 const selectedPatient = ref<Patient | null>(null)
 const patients = ref<Patient[]>([])
-
 const loadPatients = () => {
   patients.value = patientService.getAllPatients()
 }
@@ -65,6 +86,21 @@ const handleRefresh = () => {
   }
   loadPatients()
 }
+
+const handleAlertClick = (alert: Alert) => {
+  const patient = patients.value.find(p => p.id === alert.patientId)
+  if (patient) {
+    handleViewPatient(patient)
+  }
+}
+
+const handleViewPatientFromAlert = (patientId: number) => {
+  const patient = patients.value.find(p => p.id === patientId)
+  if (patient) {
+    handleViewPatient(patient)
+  }
+}
+
 
 onMounted(() => {
   loadPatients()

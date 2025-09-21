@@ -331,6 +331,15 @@
     @apply flex justify-between items-center;
 }
 
+/* Real-time indicator */
+.realtime-indicator {
+    @apply transition-all duration-200 ease-in-out;
+}
+
+.realtime-button {
+    @apply transition-all duration-200 ease-in-out;
+}
+
 /* Dark mode support (optionnel) */
 @media (prefers-color-scheme: dark) {
     .patient-card {

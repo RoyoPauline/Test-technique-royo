@@ -28,13 +28,19 @@ const emit = defineEmits<{
 const patientService = PatientService.getInstance()
 const toasts = ref<Array<{ id: string; alert: Alert }>>([])
 const refreshInterval = ref<NodeJS.Timeout | null>(null)
+const displayedAlerts = ref<Set<string>>(new Set())
 
 const addToast = (alert: Alert) => {
-  const toastId = `${alert.id}-${Date.now()}`
-  toasts.value.push({ id: toastId, alert })
+  const alertKey = `${alert.patientId}-${alert.type}-${alert.parameter}`
   
-  if (toasts.value.length > 3) {
-    toasts.value.shift()
+  if (!displayedAlerts.value.has(alertKey)) {
+    const toastId = `${alert.id}-${Date.now()}`
+    toasts.value.push({ id: toastId, alert })
+    displayedAlerts.value.add(alertKey)
+    
+    if (toasts.value.length > 3) {
+      toasts.value.shift()
+    }
   }
 }
 
@@ -49,8 +55,10 @@ const checkForNewCriticalAlerts = () => {
   const criticalAlerts = patientService.getCriticalAlerts()
   
   criticalAlerts.forEach(alert => {
+    const alertKey = `${alert.patientId}-${alert.type}-${alert.parameter}`
     const existingToast = toasts.value.find(t => t.alert.id === alert.id)
-    if (!existingToast) {
+    
+    if (!existingToast && !displayedAlerts.value.has(alertKey)) {
       addToast(alert)
     }
   })
@@ -58,6 +66,10 @@ const checkForNewCriticalAlerts = () => {
 
 const handleViewPatient = (patientId: number) => {
   emit('viewPatient', patientId)
+}
+
+const clearDisplayedAlerts = () => {
+  displayedAlerts.value.clear()
 }
 
 const startMonitoring = () => {

@@ -310,6 +310,27 @@
     transform: translateX(0);
 }
 
+/* VitalChart Component */
+.vital-chart-container {
+    @apply transition-all duration-200 ease-in-out;
+}
+
+.vital-chart-container:hover {
+    @apply shadow-md;
+}
+
+.chart-wrapper {
+    @apply relative;
+}
+
+.chart-canvas {
+    @apply w-full h-full;
+}
+
+.chart-info {
+    @apply flex justify-between items-center;
+}
+
 /* Dark mode support (optionnel) */
 @media (prefers-color-scheme: dark) {
     .patient-card {

@@ -79,18 +79,29 @@
       <div class="charts-section mb-8">
         <h2 class="text-lg font-semibold text-gray-800 mb-4">Évolution des 24 dernières heures</h2>
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <div class="chart-container bg-gray-50 rounded-lg p-4">
-            <h3 class="text-md font-medium text-gray-700 mb-3">Fréquence Cardiaque</h3>
-            <div class="chart-placeholder h-32 bg-white rounded border-2 border-dashed border-gray-300 flex items-center justify-center">
-              <span class="text-gray-500">Graphique FC (Chart.js)</span>
-            </div>
-          </div>
-          <div class="chart-container bg-gray-50 rounded-lg p-4">
-            <h3 class="text-md font-medium text-gray-700 mb-3">Température</h3>
-            <div class="chart-placeholder h-32 bg-white rounded border-2 border-dashed border-gray-300 flex items-center justify-center">
-              <span class="text-gray-500">Graphique Température (Chart.js)</span>
-            </div>
-          </div>
+          <VitalChart
+            :patient="patient"
+            type="heartRate"
+            title="Fréquence Cardiaque"
+            unit=" bpm"
+            color="#ef4444"
+          />
+          <VitalChart
+            :patient="patient"
+            type="temperature"
+            title="Température Corporelle"
+            unit="°C"
+            color="#f59e0b"
+          />
+        </div>
+        <div class="mt-6">
+          <VitalChart
+            :patient="patient"
+            type="bloodPressure"
+            title="Tension Artérielle"
+            unit=" mmHg"
+            color="#8b5cf6"
+          />
         </div>
       </div>
 
@@ -144,6 +155,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { PatientService } from '@/services/patientService'
+import VitalChart from './VitalChart.vue'
 import type { Patient } from '@/types/patient'
 
 const props = defineProps<{

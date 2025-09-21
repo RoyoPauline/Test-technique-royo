@@ -1,0 +1,154 @@
+/* ===== COMPOSANTS DASHBOARD MÉDICAL ===== */
+
+/* PatientList Component */
+.patient-list {
+    @apply p-6;
+}
+
+.patient-card {
+    transition: all 0.2s ease-in-out;
+}
+
+.patient-card:hover {
+    transform: translateY(-1px);
+}
+
+.status-indicator {
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+}
+
+.alert-badge {
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Stat Cards */
+.stat-card {
+    transition: transform 0.2s ease-in-out;
+}
+
+.stat-card:hover {
+    transform: scale(1.05);
+}
+
+/* Vital Items */
+.vital-item {
+    min-width: 60px;
+}
+
+/* Buttons */
+.btn-primary {
+    transition: all 0.2s ease-in-out;
+}
+
+.btn-primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .patient-list {
+        @apply p-4;
+    }
+
+    .vitals-summary {
+        @apply flex-col gap-2;
+    }
+
+    .vital-item {
+        @apply text-sm;
+    }
+
+    .stats {
+        @apply flex-col gap-2;
+    }
+}
+
+/* PatientCard Component */
+.patient-card-detail {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.card-header {
+    transition: background-color 0.3s ease;
+}
+
+.vital-card {
+    transition: transform 0.2s ease-in-out;
+}
+
+.vital-card:hover {
+    transform: translateY(-2px);
+}
+
+.chart-container {
+    transition: all 0.2s ease-in-out;
+}
+
+.chart-placeholder {
+    transition: border-color 0.2s ease;
+}
+
+.alert-item {
+    animation: slideIn 0.3s ease-in-out;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.status-badge {
+    animation: pulse 2s infinite;
+}
+
+/* Dark mode support (optionnel) */
+@media (prefers-color-scheme: dark) {
+    .patient-card {
+        @apply bg-gray-800 border-gray-700;
+    }
+
+    .stat-card {
+        @apply bg-gray-800 border-gray-700;
+    }
+
+    .patient-card-detail {
+        @apply bg-gray-800 border-gray-700;
+    }
+
+    .vital-card {
+        @apply bg-gray-700;
+    }
+}

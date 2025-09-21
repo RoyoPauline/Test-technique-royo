@@ -57,6 +57,11 @@
         </div>
       </div>
     </main>
+
+    <ToastContainer
+      :patients="patients"
+      @view-patient="handleViewPatientFromAlert"
+    />
   </div>
 </template>
 
@@ -66,6 +71,7 @@ import PatientList from '@/components/PatientList.vue'
 import PatientCard from '@/components/PatientCard.vue'
 import AlertsPanel from '@/components/AlertsPanel.vue'
 import SearchBar from '@/components/SearchBar.vue'
+import ToastContainer from '@/components/ToastContainer.vue'
 import { PatientService } from '@/services/patientService'
 import type { Patient, Alert } from '@/types/patient'
 

@@ -220,6 +220,47 @@
     @apply transition-colors duration-200;
 }
 
+/* SearchBar Component */
+.search-bar-container {
+    @apply w-full;
+}
+
+.search-input-wrapper {
+    @apply relative;
+}
+
+.search-input {
+    @apply transition-all duration-200 ease-in-out;
+}
+
+.search-input:focus {
+    @apply shadow-lg;
+}
+
+.clear-button {
+    @apply cursor-pointer transition-colors duration-200;
+}
+
+.no-results {
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+.search-results {
+    animation: slideDown 0.3s ease-in-out;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 /* Dark mode support (optionnel) */
 @media (prefers-color-scheme: dark) {
     .patient-card {

@@ -14,19 +14,29 @@
     </header>
 
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <div v-if="currentView === 'list'" class="grid grid-cols-1 lg:grid-cols-4 gap-6">
-        <div class="lg:col-span-3">
-          <PatientList
+      <div v-if="currentView === 'list'" class="space-y-6">
+        <div class="search-section">
+          <SearchBar
             :patients="patients"
-            @view-patient="handleViewPatient"
+            @search-results="handleSearchResults"
+            @clear-search="handleClearSearch"
           />
         </div>
-        <div class="lg:col-span-1">
-          <AlertsPanel
-            :patients="patients"
-            @view-patient="handleViewPatientFromAlert"
-            @alert-click="handleAlertClick"
-          />
+        
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+          <div class="lg:col-span-3">
+            <PatientList
+              :patients="filteredPatients"
+              @view-patient="handleViewPatient"
+            />
+          </div>
+          <div class="lg:col-span-1">
+            <AlertsPanel
+              :patients="patients"
+              @view-patient="handleViewPatientFromAlert"
+              @alert-click="handleAlertClick"
+            />
+          </div>
         </div>
       </div>
       
@@ -55,6 +65,7 @@ import { onMounted, ref } from 'vue'
 import PatientList from '@/components/PatientList.vue'
 import PatientCard from '@/components/PatientCard.vue'
 import AlertsPanel from '@/components/AlertsPanel.vue'
+import SearchBar from '@/components/SearchBar.vue'
 import { PatientService } from '@/services/patientService'
 import type { Patient, Alert } from '@/types/patient'
 
@@ -63,8 +74,11 @@ import type { Patient, Alert } from '@/types/patient'
 const currentView = ref<'list' | 'detail'>('list')
 const selectedPatient = ref<Patient | null>(null)
 const patients = ref<Patient[]>([])
+const filteredPatients = ref<Patient[]>([])
+
 const loadPatients = () => {
   patients.value = patientService.getAllPatients()
+  filteredPatients.value = patients.value
 }
 
 const handleViewPatient = (patient: Patient) => {
@@ -99,6 +113,14 @@ const handleViewPatientFromAlert = (patientId: number) => {
   if (patient) {
     handleViewPatient(patient)
   }
+}
+
+const handleSearchResults = (results: Patient[]) => {
+  filteredPatients.value = results
+}
+
+const handleClearSearch = () => {
+  filteredPatients.value = patients.value
 }
 
 

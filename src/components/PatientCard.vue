@@ -1,5 +1,15 @@
 <template>
-  <div class="patient-card-detail bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden">
+  <div class="patient-detail-container">
+    <div class="navigation-bar mb-6">
+      <button
+        class="btn-back bg-primary-100 text-primary-700 px-4 py-2 rounded-lg hover:bg-primary-200 transition-colors font-medium"
+        @click="goBack"
+      >
+        ← Retour au Dashboard
+      </button>
+    </div>
+    
+    <div class="patient-card-detail bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden">
     <div class="card-header p-6 border-b border-gray-100" :class="getHeaderClass()">
       <div class="flex items-center justify-between">
         <div class="patient-info">
@@ -126,6 +136,7 @@
           🔄 Actualiser
         </button>
       </div>
+    </div>
     </div>
   </div>
 </template>

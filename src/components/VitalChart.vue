@@ -54,11 +54,9 @@ const props = defineProps<{
 
 const chartData = computed(() => {
   const data = props.patient.vitals[props.type]
-  
   if (props.type === 'bloodPressure') {
     const systolicData = data.map((bp: any) => bp.systolic)
     const diastolicData = data.map((bp: any) => bp.diastolic)
-    
     return {
       labels: generateTimeLabels(data.length),
       datasets: [
@@ -81,7 +79,6 @@ const chartData = computed(() => {
       ]
     }
   }
-  
   return {
     labels: generateTimeLabels(data.length),
     datasets: [
@@ -178,12 +175,10 @@ const chartOptions = computed(() => ({
 
 const lastValue = computed(() => {
   const data = props.patient.vitals[props.type]
-  
   if (props.type === 'bloodPressure') {
     const lastBp = data[data.length - 1]
     return `${lastBp.systolic}/${lastBp.diastolic}`
   }
-  
   return `${data[data.length - 1]}${props.unit}`
 })
 
@@ -195,14 +190,12 @@ const timeRange = computed(() => {
 const generateTimeLabels = (dataLength: number): string[] => {
   const labels = []
   const now = new Date()
-  
   for (let i = dataLength - 1; i >= 0; i--) {
     const time = new Date(now.getTime() - (i * 60 * 60 * 1000))
     const hours = time.getHours().toString().padStart(2, '0')
     const minutes = time.getMinutes().toString().padStart(2, '0')
     labels.push(`${hours}:${minutes}`)
   }
-  
   return labels
 }
 </script>
